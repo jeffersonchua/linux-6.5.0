@@ -1,0 +1,21 @@
+--- vmware/vmmon-only/include/pgtbl.h	2023-06-30 08:04:13.247729900 +0800
++++ vmware/vmmon-only/include/pgtbl.h	2023-06-30 08:05:41.717728599 +0800
+@@ -91,7 +91,7 @@
+          } else {
+             pte_t *pte;
+ 
+-            pte = pte_offset_map(pmd, addr);
++            pte = pte_offset_kernel(pmd, addr);
+             if (pte_present(*pte) == 0) {
+                pte_unmap(pte);
+                return INVALID_MPN;
+--- vmware/vmnet-only/bridge.c	2023-06-30 09:13:50.917668443 +0800
++++ vmware/vmnet-only/bridge.c	2023-06-30 09:14:05.747668224 +0800
+@@ -44,6 +44,7 @@
+ #include <linux/if_arp.h>
+ #include <net/tcp.h>
+ #include <net/ipv6.h>
++#include <net/gso.h>
+ 
+ #ifdef CONFIG_NET_RADIO
+ #   include <linux/wireless.h>
